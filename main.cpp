@@ -160,33 +160,38 @@ void File(string result)
     cin >> choice;
 
     choiceReturn = YNchecker(choice);
-        if(choiceReturn == 3)
-            goto choiceLoop;
-
-    existLoop:
-    cout << "\nEnter file name: ";
-    cin.ignore();                   //for ignoring buffer that makes it without input
-    getline(cin, FileName);         //for getting filename with spaces
-
-    ifstream ifile;
-    ifile.open(FileName + ".txt");
-    if(ifile)
+    if (choiceReturn == 3)
+	    goto choiceLoop;
+	
+    if (choiceReturn == 1)
     {
-      cout<<"\nFile already exists";
-      cout<<"\nWant to replace it[Y/N]: ";
-      cin >> exist;
-      existReturn = YNchecker(exist);
-      if (existReturn == 2)
-        goto existLoop;
-      else if (existReturn == 3)
-        goto existLoop;
+    	existLoop:
+    	cout << "\nEnter file name: ";
+    	cin.ignore();                   //for ignoring buffer that makes it without input
+    	getline(cin, FileName);         //for getting filename with spaces
 
+    	ifstream ifile;
+   	 ifile.open(FileName + ".txt");
+    	if(ifile)
+   	 {
+     		cout<<"\nFile already exists";
+      		cout<<"\nWant to replace it[Y/N]: ";
+      		cin >> exist;
+      		existReturn = YNchecker(exist);
+      		
+		if (existReturn == 2)
+        		goto existLoop;
+		
+      		else if (existReturn == 3)
+        		goto existLoop;
+
+    	}
+
+   	ofstream PasswordFile(FileName + ".txt");
+    	PasswordFile << result;
+    	PasswordFile.close();
+    	cout << "\nPassword stored in " << FileName << ".txt";
     }
-
-    ofstream PasswordFile(FileName + ".txt");
-    PasswordFile << result;
-    PasswordFile.close();
-    cout << "\nPassword stored in " << FileName << ".txt";
 }
 
 
